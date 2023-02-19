@@ -10,6 +10,7 @@ specifiers:
   react-dom: ^18.2.0
   react-router-dom: ^6.8.1
   react-scripts: 5.0.1
+  smoothscroll-polyfill: ^0.4.4
   tailwindcss: ^3.2.6
   web-vitals: ^2.1.4
 
@@ -21,6 +22,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
   react-scripts: 5.0.1_react@18.2.0
+  smoothscroll-polyfill: 0.4.4
   web-vitals: 2.1.4
 
 devDependencies:
@@ -8851,6 +8853,10 @@ packages:
   /slash/4.0.0:
     resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
     engines: {node: '>=12'}
+    dev: false
+
+  /smoothscroll-polyfill/0.4.4:
+    resolution: {integrity: sha512-TK5ZA9U5RqCwMpfoMq/l1mrH0JAR7y7KRvOBx0n2869aLxch+gT9GhN3yUfjiw+d/DiF1mKo14+hd62JyMmoBg==}
     dev: false
 
   /sockjs/0.3.24:
