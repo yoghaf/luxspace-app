@@ -31,5 +31,5 @@ function Breadcrumb({ List }) {
 
 export default Breadcrumb;
 Breadcrumb.propTypes = {
-  list: propTypes.array.isRequired,
+  List: propTypes.array.isRequired,
 };
