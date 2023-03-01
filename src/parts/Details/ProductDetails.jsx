@@ -1,7 +1,7 @@
 import React from "react";
 import parse from "html-react-parser";
 import { useGlobalContext } from "../../helpers/hooks/useGlobalContext";
-
+import "../../helpers/format/currency";
 function ProductDetails(data) {
   const [slider, setSlider] = React.useState(() => data.data?.imgUrls?.[0] || "");
   const { dispatch } = useGlobalContext();
@@ -11,7 +11,7 @@ function ProductDetails(data) {
       <div className="flex flex-wrap my-4 md:my-12">
         <div className="w-full md:hidden px-4">
           <h2 className="text-5xl font-semibold">{data.data.title}</h2>
-          <span className="text-xl">IDR {data.data.price}</span>
+          <span className="text-xl">{data.data.price.currency()}</span>
         </div>
         <div className="flex-1">
           <div className="slider">
@@ -35,7 +35,7 @@ function ProductDetails(data) {
         </div>
         <div className="flex-1 px-4 md:p-6">
           <h2 className="text-5xl font-semibold">{data.data.title}</h2>
-          <p className=" mt-5 text-xl">IDR {data.data.price}</p>
+          <p className=" mt-5 text-xl">{data.data.price.currency()}</p>
 
           <button
             href="cart.html"

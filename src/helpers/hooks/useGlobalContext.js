@@ -15,7 +15,7 @@ export function useGlobalContext() {
 }
 
 function Reducer(state, action) {
-  console.log(state);
+  // console.log(state);
   switch (action.type) {
     //add
     case "ADD_TO_CART":

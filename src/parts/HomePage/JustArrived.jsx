@@ -3,6 +3,7 @@ import useAsync from "../../helpers/hooks/useAsync";
 import fetch from "../../helpers/fetch";
 import { Link } from "react-router-dom";
 import Carousel from "../../components/Carousel";
+import "../../helpers/format/currency";
 
 function Loading() {
   return Array(6)
@@ -38,9 +39,13 @@ function JustArrived() {
       </div>
       <div className="overflow-x-hidden px-4" id="carousel">
         <div className="container mx-auto" ref={refContainer}></div>
-
         {isLoading ? (
-          <div className="flex -mx-4 flex-row relative" style={{ paddingLeft: refContainer.current?.getBoundingClientRect?.()?.left - 16 || 0 }}>
+          <div
+            className="flex -mx-4 flex-row relative"
+            style={{
+              paddingLeft: refContainer.current?.getBoundingClientRect?.()?.left - 16 || 0,
+            }}
+          >
             <Loading />
           </div>
         ) : error ? (
@@ -64,7 +69,7 @@ function JustArrived() {
                     <img src={`${item.imageUrl}`} alt="" className="w-full h-full object-cover object-center" />
                   </div>
                   <h5 className="text-lg font-semibold mt-4">{item.title}</h5>
-                  <span className="">IDR {item.price}</span>
+                  <span className="">{item.price.currency()}</span>
                   <Link to={`/categories/${item.idc}/products/${item.id}`} className="stretched-link"></Link>
                 </div>
               );

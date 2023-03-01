@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useAsync from "../../helpers/hooks/useAsync";
 import fetch from "../../helpers/fetch";
+import "../../helpers/format/thousand";
 function Loading({ ratio = {} }) {
   const dummy = [
     {
@@ -47,7 +48,7 @@ function Loading({ ratio = {} }) {
 }
 
 function BrowseRoom() {
-  const { data, status, error, run, isLoading } = useAsync({ data: { username: "" } });
+  const { data, run, isLoading } = useAsync({ data: { username: "" } });
   useEffect(() => {
     run(fetch({ url: "/api/categories/?page=1&limit=4" }));
   }, [run]);
@@ -91,7 +92,7 @@ function BrowseRoom() {
                   <div className={`overlay ${ratioClassNames?.meta?.[item.ratio.md]}`}>
                     <h5 className="text-lg font-semibold">{item.title}</h5>
                     <span className="">
-                      {item.products} items{item.products > 1 ? "s" : ""}
+                      {item.products.thousand()} items{item.products > 1 ? "s" : ""}
                     </span>
                   </div>
                 </div>

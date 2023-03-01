@@ -16,7 +16,7 @@ function ShippingDetails() {
     courir: "",
     payment: "",
   });
-  console.log(payload);
+
   const isSubmitDisabled =
     Object.keys(payload).filter((key) => {
       return payload[key] !== "";
@@ -24,7 +24,7 @@ function ShippingDetails() {
   useEffect(() => {
     run(fetch({ url: `/api/checkout/meta` }));
   }, [run]);
-  console.log(data);
+
   async function fnSubmit(event) {
     event.preventDefault();
     try {
