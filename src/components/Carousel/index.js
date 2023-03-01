@@ -72,7 +72,10 @@ function Carousel({ children, refContainer }) {
         posX1.current = e.clientX;
       }
 
-      refDragHandler.current.style.left = `${refDragHandler.current.offsetLeft - posX2.current}px`;
+      // refDragHandler.current.style.left = `${refDragHandler.current.offsetLeft - posX2.current}px`;
+      if (refDragHandler.current) {
+        refDragHandler.current.style.left = `${refDragHandler.current.offsetLeft - posX2.current}px`;
+      }
     },
     [posX1, posX2]
   );

@@ -7,7 +7,7 @@ function Header({ theme, position }) {
   const [isCartChanged, setCartChanged] = useState(false);
   const { state } = useGlobalContext();
   const prevCart = useRef(state?.cart || {});
-  console.log(state.cart);
+
   useLayoutEffect(() => {
     if (prevCart.current !== state.cart) {
       prevCart.current = state?.cart || {};

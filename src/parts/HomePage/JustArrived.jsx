@@ -18,7 +18,7 @@ function Loading() {
     });
 }
 function JustArrived() {
-  const { data, status, error, run, isLoading } = useAsync({ data: { username: "" } });
+  const { data, error, run, isLoading } = useAsync({ data: { username: "" } });
 
   const refContainer = useRef(null);
 

@@ -15,7 +15,9 @@ export function useGlobalContext() {
 }
 
 function Reducer(state, action) {
+  console.log(state);
   switch (action.type) {
+    //add
     case "ADD_TO_CART":
       return {
         ...state,
@@ -26,6 +28,24 @@ function Reducer(state, action) {
             }
           : { [action.item.id]: action.item },
       };
+    //remove
+    case "REMOVE_FROM_CART":
+      return {
+        ...state,
+        cart: Object.keys(state.cart)
+          .filter((key) => +key !== +action.id)
+          .reduce((acc, key) => {
+            const item = state.cart[key];
+            acc[item.id] = item;
+            return acc;
+          }, {}),
+      };
+    //reset
+    case "RESET_CART":
+      return {
+        ...state,
+        cart: initialState.cart,
+      };
 
     default:
       throw new Error(`Unhandled action type${action.type}`);
@@ -33,5 +53,6 @@ function Reducer(state, action) {
 }
 export default function Provider(props) {
   const [state, dispatch] = useReducer(Reducer, initialState);
+
   return <Context.Provider value={[state, dispatch]} {...props} />;
 }
