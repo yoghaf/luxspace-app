@@ -1,6 +1,15 @@
-if (!Number.hasOwnProperty("thousand"))
-  Number.prototype.thousand = function (decimals = 0) {
-    const thousand = new Intl.NumberFormat(navigator.language);
+// if (!Number.prototype.hasOwnProperty("thousand")) {
+//   Object.defineProperty(Number.prototype, "thousand", {
+//     get: function () {
+//       const thousand = new Intl.NumberFormat(navigator.language);
+//       return thousand.format(this);
+//     },
+//     configurable: true,
+//     enumerable: false,
+//   });
+// }
 
-    return thousand.format(this);
-  };
+export default function thousand(value) {
+  const thousand = new Intl.NumberFormat(navigator.language);
+  return thousand.format(value);
+}
