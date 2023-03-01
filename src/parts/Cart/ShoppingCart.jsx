@@ -1,7 +1,7 @@
 import React from "react";
 import { useGlobalContext } from "../../helpers/hooks/useGlobalContext";
 import { Link } from "react-router-dom";
-import "../../helpers/format/currency";
+import formatCurrency from "../../helpers/format/currency";
 function ShoppingCart() {
   const { state, dispatch } = useGlobalContext();
 
@@ -58,12 +58,12 @@ function ShoppingCart() {
                 <div className="">
                   <h6 className="font-semibold text-lg md:text-xl leading-8">{item.title}</h6>
                   <span className="text-sm md:text-lg">{item.category.title}</span>
-                  <h6 className="font-semibold text-base md:text-lg block md:hidden">{item.price.currency()}</h6>
+                  <h6 className="font-semibold text-base md:text-lg block md:hidden">{formatCurrency(item.price)}</h6>
                 </div>
               </div>
               <div className="px-4 w-auto flex-none md:flex-1 md:w-5/12 hidden md:block">
                 <div className="">
-                  <h6 className="font-semibold text-lg">{item.price.currency()}</h6>
+                  <h6 className="font-semibold text-lg">{formatCurrency(item.price)}</h6>
                 </div>
               </div>
               <div className="px-4 w-2/12">

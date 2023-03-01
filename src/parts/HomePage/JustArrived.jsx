@@ -3,7 +3,7 @@ import useAsync from "../../helpers/hooks/useAsync";
 import fetch from "../../helpers/fetch";
 import { Link } from "react-router-dom";
 import Carousel from "../../components/Carousel";
-import "../../helpers/format/currency";
+import formatCurrency from "../../helpers/format/currency";
 
 function Loading() {
   return Array(6)
@@ -69,7 +69,7 @@ function JustArrived() {
                     <img src={`${item.imageUrl}`} alt="" className="w-full h-full object-cover object-center" />
                   </div>
                   <h5 className="text-lg font-semibold mt-4">{item.title}</h5>
-                  <span className="">{item.price.currency()}</span>
+                  <span className="">{formatCurrency(item.price)}</span>
                   <Link to={`/categories/${item.idc}/products/${item.id}`} className="stretched-link"></Link>
                 </div>
               );

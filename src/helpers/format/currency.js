@@ -1,10 +1,10 @@
-if (!Number.prototype.hasOwnProperty("currency")) {
-  Number.prototype.currency = function (decimals = 0) {
-    const currency = new Intl.NumberFormat(navigator.language, {
-      style: "currency",
-      currency: "IDR",
-    });
+function formatCurrency(value, decimals = 0) {
+  const currency = new Intl.NumberFormat(navigator.language, {
+    style: "currency",
+    currency: "IDR",
+  });
 
-    return currency.format(this);
-  };
+  return currency.format(value);
 }
+
+export default formatCurrency;
