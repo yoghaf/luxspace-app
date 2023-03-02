@@ -18,8 +18,8 @@ function Carousel({ children }) {
     },
 
     1024: {
-      slidesPerView: 5,
-      spaceBetween: 25,
+      slidesPerView: 4,
+      spaceBetween: 30,
     },
   };
 
