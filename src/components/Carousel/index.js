@@ -1,150 +1,32 @@
-import React, { useRef, useState, useCallback, useLayoutEffect } from "react";
-import { addClass, removeClass } from "../../helpers/format/classNameModifier";
+import React from "react";
+import { Swiper } from "swiper/react";
 
-function Carousel({ children, refContainer }) {
-  const refDragHandler = useRef(null);
-  const containerClientRect = refContainer.current.getBoundingClientRect();
-  const [index, setIndex] = useState(0);
-  const threshold = 100;
-  const itemToShow = window.innerWidth < 767 ? 1 : 4;
-  const DIRECTION_LEFT = "DIRECTION_LEFT";
-  const DIRECTION_RIGHT = "DIRECTION_RIGHT";
+import "swiper/css";
+import "swiper/css/pagination";
+import "tailwindcss/tailwind.css";
 
-  const posInitial = useRef();
-  const posX1 = useRef();
-  const posX2 = useRef();
-  const isAllowShift = useRef(true);
-  const posFinal = useRef();
-  const cards = useRef();
-  const CardSize = cards.current?.[0].offseWidth || 0;
-  const CardCount = cards.current?.length || 0;
-
-  const fnCheckIndex = useCallback(
-    (e) => {
-      if (e.propertyName === "left") {
-        setTimeout(() => {
-          removeClass(refDragHandler.current, "transition-all duration-200");
-        }, 200);
-        const isMobile = window.innerWidth < 767 ? 0 : -1;
-        if (index <= 0) {
-          refDragHandler.current.style.left = 0;
-          setIndex(0);
-        } else if (index >= CardCount - itemToShow) {
-          refDragHandler.current.style.left = `${-((CardCount - itemToShow + isMobile) * CardSize)}px`;
-          setIndex(CardCount - itemToShow);
-        } else if (index === CardCount || index === CardCount - 1) {
-          refDragHandler.current.style.left = `${(CardCount - 1) * CardSize}px`;
-          setIndex(CardCount - 1);
-        }
-        isAllowShift.current = true;
-      }
+function Carousel({ children }) {
+  const breakpoints = {
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 10,
     },
-    [CardCount, CardSize, index, itemToShow]
-  );
 
-  const fnShiftItem = useCallback(
-    (direction) => {
-      addClass(refDragHandler.current, "transition-all duration-200");
-      if (isAllowShift.current) {
-        if (direction === "DIRECTION_LEFT") {
-          setIndex((prev) => prev + 1);
-          refDragHandler.current.style.left = `${posInitial.current - CardSize}px`;
-        } else if (direction === "DIRECTION_RIGHT") {
-          setIndex((prev) => prev - 1);
-          refDragHandler.current.style.left = `${posInitial.current + CardSize}px`;
-        }
-      }
-      isAllowShift.current = false;
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 15,
     },
-    [CardSize]
-  );
 
-  const onDragMove = useCallback(
-    (e) => {
-      e = e || window.event;
-      e.preventDefault();
-
-      if (e.type === "touchmove") {
-        posX2.current = posX1.current - e.touches[0].clientX;
-        posX1.current = e.touches[0].clientX;
-      } else {
-        posX2.current = posX1.current - e.clientX;
-        posX1.current = e.clientX;
-      }
-
-      // refDragHandler.current.style.left = `${refDragHandler.current.offsetLeft - posX2.current}px`;
-      if (refDragHandler.current) {
-        refDragHandler.current.style.left = `${refDragHandler.current.offsetLeft - posX2.current}px`;
-      }
+    1024: {
+      slidesPerView: 5,
+      spaceBetween: 25,
     },
-    [posX1, posX2]
-  );
+  };
 
-  const onDragEnd = useCallback(
-    (e) => {
-      e = e || window.event;
-      e.preventDefault();
-      posFinal.current = refDragHandler.current.offsetLeft;
-      if (posFinal.current - posInitial.current < -threshold) {
-        fnShiftItem(DIRECTION_LEFT);
-      } else if (posFinal.current - posInitial.current > threshold) {
-        fnShiftItem(DIRECTION_RIGHT);
-      } else {
-        refDragHandler.current.style.left = `${posInitial.current}px`;
-      }
-    },
-    [fnShiftItem]
-  );
-
-  const onDragStart = useCallback(
-    (e) => {
-      e = e || window.event;
-      e.preventDefault();
-
-      posInitial.current = refDragHandler.current.offsetLeft;
-      if (e.type === "touchstart") {
-        posX1.current = e.touches[0].clientX;
-      } else {
-        posX1.current = e.clientX;
-        document.onmouseup = onDragEnd;
-        document.onmousemove = onDragMove;
-      }
-    },
-    [onDragEnd, onDragMove]
-  );
-
-  const onClick = useCallback((e) => {
-    e = e || window.event;
-    !isAllowShift.current && e.preventDefault();
-  }, []);
-
-  useLayoutEffect(() => {
-    const refForwardDragHandler = refDragHandler.current;
-    refForwardDragHandler.onmousedown = onDragStart;
-    refForwardDragHandler.addEventListener("touchstart", onDragStart);
-    refForwardDragHandler.addEventListener("touchend", onDragEnd);
-    refForwardDragHandler.addEventListener("touchmove", onDragMove);
-    refForwardDragHandler.addEventListener("click", onClick);
-    refForwardDragHandler.addEventListener("transitionend", fnCheckIndex);
-
-    return () => {
-      refForwardDragHandler.removeEventListener("touchstart", onDragStart);
-      refForwardDragHandler.removeEventListener("touchend", onDragEnd);
-      refForwardDragHandler.removeEventListener("touchmove", onDragMove);
-      refForwardDragHandler.removeEventListener("click", onClick);
-      refForwardDragHandler.removeEventListener("transitionend", fnCheckIndex);
-    };
-  }, [onDragEnd, onDragMove, onDragStart, onClick, fnCheckIndex]);
-
-  useLayoutEffect(() => {
-    if (refDragHandler.current) {
-      cards.current = refDragHandler.current.getElementsByClassName("card");
-    }
-  }, []);
   return (
-    <div ref={refDragHandler} className="flex -mx-4 flex-row relative" style={{ paddingLeft: containerClientRect.left - 16 }}>
+    <Swiper breakpoints={breakpoints} pagination={{ clickable: true }} className="mySwiper">
       {children}
-    </div>
+    </Swiper>
   );
 }
 
